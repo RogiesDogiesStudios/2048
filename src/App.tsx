@@ -5,14 +5,19 @@ interface AppState{
   kevin: string;
 }
 
-document.addEventListener('keydown', (event) => {
-  console.log("kevin")
-})
-
 class App extends Component<{}, AppState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      kevin: ''
+    }
+  }
+
   componentDidMount() {
-    addEventListener('keydown', (event) => {
-      console.log("kevin")
+    document.addEventListener('keydown', event => {
+      this.setState({
+        kevin: event.key
+      })
     })
   }
 
