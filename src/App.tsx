@@ -1,13 +1,27 @@
 import React, {Component} from 'react';
 import './App.css';
 
+interface AppState{
+  kevin: string;
+}
 
-class App extends Component<{}, {}> {
+document.addEventListener('keydown', (event) => {
+  console.log("kevin")
+})
+
+class App extends Component<{}, AppState> {
+  componentDidMount() {
+    addEventListener('keydown', (event) => {
+      console.log("kevin")
+    })
+  }
 
   render() {
     return (
-        <p></p>
-    );
+        <div>
+          {this.state.kevin}
+        </div>
+            );
   }
 }
 
