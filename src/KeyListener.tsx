@@ -186,7 +186,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
 
         //return newBoard to App
         this.props.onChange(newBoard);
-        if(this.loseCon(newBoard)) alert("Game Over");
+        if(this.loseCon(newBoard)) alert("You Lost!");
     }
 
     loseCon(newBoard: number[][]){
@@ -196,10 +196,10 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
             if(newBoard[i].includes(0))
                 return false;
             //If there are two duplicates next to each other on a row
-            if(newBoard[i][1] === newBoard[i][0] || newBoard[i][1] === newBoard[i][2] || newBoard[i][2] === newBoard[i][3])
+            if(newBoard[i][0] === newBoard[i][1] || newBoard[i][1] === newBoard[i][2] || newBoard[i][2] === newBoard[i][3])
                 return false;
             //If there are two duplicates next to each other in a column
-            if(newBoard[1][i] === newBoard[0][i] || newBoard[i][1] === newBoard[2][i] || newBoard[2][i] === newBoard[3][i])
+            if(newBoard[0][i] === newBoard[1][i] || newBoard[1][i] === newBoard[2][i] || newBoard[2][i] === newBoard[3][i])
                 return false;
         }
         return true;
