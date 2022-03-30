@@ -54,7 +54,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
-                        if(k != i) {
+                        if(k !== i) {
                             newBoard[k][j] = newBoard[i][j];
                             newBoard[i][j] = 0;
                         }
@@ -62,7 +62,8 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                 }
              }
          }
-        this.addNumber(newBoard);
+
+         this.addNumber(newBoard);
     }
 
     moveUp() {
@@ -87,7 +88,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
-                        if(k != i) {
+                        if(k !== i) {
                             newBoard[k][j] = newBoard[i][j];
                             newBoard[i][j] = 0;
                         }
@@ -120,7 +121,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
-                        if(k != j) {
+                        if(k !== j) {
                             newBoard[i][k] = newBoard[i][j];
                             newBoard[i][j] = 0;
                         }
@@ -153,7 +154,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
-                        if(k != j) {
+                        if(k !== j) {
                             newBoard[i][k] = newBoard[i][j];
                             newBoard[i][j] = 0;
                         }
@@ -171,7 +172,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         do {
             index1 = Math.ceil(Math.random() * 4) - 1
             index2 = Math.ceil(Math.random() * 4) - 1
-        } while(newBoard[index1][index2] != 0);
+        } while(newBoard[index1][index2] !== 0);
 
         //Set value of empty index to 2 or 4
         if(Math.random() > .1)
@@ -186,7 +187,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     render() {
         return(
             <div>
-                {this.state.score}
+                <p>
+                    {this.state.score}
+                </p>
             </div>
         );
     }
