@@ -32,7 +32,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveDown() {
-       let newBoard = this.props.board;
+        const newBoard = Object.assign({}, this.props.board);
         let hasMoved = false;
          for(let i = 2; i >= 0; i--) {
              for(let j = 0; j < 4; j++) {
@@ -66,7 +66,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveUp() {
-        let newBoard = this.props.board;
+        const newBoard = Object.assign({}, this.props.board);
         let hasMoved = false;
         for(let i = 1; i <= 3; i++) {
             for(let j = 0; j < 4; j++) {
@@ -100,7 +100,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveLeft() {
-        let newBoard = this.props.board;
+        const newBoard = Object.assign({}, this.props.board);
         let hasMoved = false;
         for(let j = 1; j <= 3; j++) {
             for(let i = 0; i < 4; i++) {
@@ -134,7 +134,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveRight() {
-        let newBoard = this.props.board;
+        const newBoard = Object.assign({}, this.props.board);
         let hasMoved = false;
         for(let j = 2; j >= 0; j--) {
             for(let i = 0; i < 4; i++) {
