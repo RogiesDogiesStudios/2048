@@ -9,24 +9,16 @@ class App extends Component<{}, AppState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      kevin: ''
+        board: [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]],
+    };
     }
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', event => {
-      this.setState({
-        kevin: event.key
-      })
-    })
-  }
 
   render() {
     return (
         <div>
           {this.state.kevin}
         </div>
-            );
+    );
   }
 }
 
