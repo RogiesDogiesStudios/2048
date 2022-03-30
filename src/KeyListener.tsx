@@ -47,9 +47,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         newBoard[k+1][j] *= newBoard[k+1][j];
                         newBoard[i][j] = 0;
                     }
-                    else {
-                        newBoard[k][j] = newBoard[i][j];
-                        newBoard[i][j] = 0;
+                    else { // Just bring it to the first empty spot.
+                        if(k != i) {
+                            newBoard[k][j] = newBoard[i][j];
+                            newBoard[i][j] = 0;
+                        }
                     }
                 }
              }
