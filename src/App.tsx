@@ -15,14 +15,18 @@ class App extends Component<{}, AppState> {
     };
     }
 
-  render() {
-    return (
-        <div title="Grid">
-            <Grid board={this.state.board}/>
-            <KeyListener board={this.state.board} onChange={(value) => {this.setState({board: value})}}/>
-        </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <div>
+                    <Grid board={this.state.board}/>
+                </div>
+                <div>
+                    <KeyListener onChange={(val) => this.setState({board: val})} board={this.state.board}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
