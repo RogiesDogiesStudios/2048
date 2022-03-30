@@ -37,12 +37,13 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // keep shifting down
                     let k = i;
 
-                    // find lowest empty space
+                    // find the lowest empty space
                     //We need to stop kevin's racism - I concur!
                     while( k+1 !== 4 && newBoard[k+1][j] === 0) {
                         k++;
                     }
 
+                    // Combine numbers if they're the same.
                     if(newBoard[k][j] === newBoard[i][j] && k !== i) {
                         newBoard[k+1][j] *= newBoard[k+1][j];
                         newBoard[i][j] = 0;
@@ -93,7 +94,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         this.props.onChange(newBoard);
     }
 
-    render() {return(<p>keyListner!</p>);}
+    render() {
+        return("THIS IS JUST A TEST!");
+    }
 }
 
 export default KeyListener;

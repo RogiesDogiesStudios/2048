@@ -20,7 +20,6 @@ class Grid extends Component<GridProps, {}> {
     }
 
     render() {
-        //this.keyPressed();
         return (
             <div className="grid-container">
                 <div className="grid-item">{this.getElement(0, 0)}</div>

@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
+import KeyListener from "./KeyListener";
+import Grid from "./Grid";
+
 
 interface AppState{
-  kevin: string;
+  board: number[][]
 }
 
 class App extends Component<{}, AppState> {
@@ -16,7 +19,12 @@ class App extends Component<{}, AppState> {
   render() {
     return (
         <div>
-          {this.state.kevin}
+            <div>
+                <Grid board={this.state.board}/>
+            </div>
+        <div>
+          <KeyListener onChange={(val) => this.setState({board: val})} board={this.state.board}/>
+        </div>
         </div>
     );
   }
