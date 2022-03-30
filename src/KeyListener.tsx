@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import './App.css';
 
 interface KeyListenerProps{
-    onChange(board: number[][]): void;
-    board: number[][]
+    onChange(board: number[][]): void,
+    board: number[][],
+    baseNum: number
 }
 
 interface KeyListenerState{
-    full: boolean
     score: number
 }
 
@@ -14,7 +15,6 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            full: false,
             score: 0,
         };
     }
@@ -33,6 +33,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
 
     moveDown() {
        let newBoard = this.props.board;
+        let hasMoved = false;
          for(let i = 2; i >= 0; i--) {
              for(let j = 0; j < 4; j++) {
                 if(newBoard[i][j] !== 0) {
@@ -40,7 +41,6 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     let k = i;
 
                     // find the lowest empty space
-                    //We need to stop kevin's racism - I concur!
                     while( k+1 !== 4 && newBoard[k+1][j] === 0) {
                         k++;
                     }
@@ -52,22 +52,22 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                             score : this.state.score + newBoard[k+1][j]
                         });
                         newBoard[i][j] = 0;
+                        hasMoved = true;
                     }
-                    else { // Just bring it to the first empty spot.
-                        if(k !== i) {
+                    else if(k !== i) { // Just bring it to the first empty spot.
                             newBoard[k][j] = newBoard[i][j];
                             newBoard[i][j] = 0;
-                        }
+                            hasMoved = true;
                     }
                 }
              }
          }
-
-         this.addNumber(newBoard);
+        if(hasMoved) this.addNumber(newBoard);
     }
 
     moveUp() {
         let newBoard = this.props.board;
+        let hasMoved = false;
         for(let i = 1; i <= 3; i++) {
             for(let j = 0; j < 4; j++) {
                 if(newBoard[i][j] !== 0) {
@@ -86,21 +86,22 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                             score : this.state.score + newBoard[k-1][j]
                         });
                         newBoard[i][j] = 0;
+                        hasMoved = true;
                     }
-                    else { // Just bring it to the first empty spot.
-                        if(k !== i) {
+                    else if(k !== i) { // Just bring it to the first empty spot.
                             newBoard[k][j] = newBoard[i][j];
                             newBoard[i][j] = 0;
-                        }
+                            hasMoved = true;
                     }
                 }
             }
         }
-        this.addNumber(newBoard);
+        if(hasMoved) this.addNumber(newBoard);
     }
 
     moveLeft() {
         let newBoard = this.props.board;
+        let hasMoved = false;
         for(let j = 1; j <= 3; j++) {
             for(let i = 0; i < 4; i++) {
                 if(newBoard[i][j] !== 0) {
@@ -119,21 +120,22 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                             score : this.state.score + newBoard[i][k-1]
                         });
                         newBoard[i][j] = 0;
+                        hasMoved = true;
                     }
-                    else { // Just bring it to the first empty spot.
-                        if(k !== j) {
+                    else if(k !== j) { // Just bring it to the first empty spot.
                             newBoard[i][k] = newBoard[i][j];
                             newBoard[i][j] = 0;
-                        }
+                            hasMoved = true;
                     }
                 }
             }
         }
-        this.addNumber(newBoard);
+        if(hasMoved) this.addNumber(newBoard);
     }
 
     moveRight() {
         let newBoard = this.props.board;
+        let hasMoved = false;
         for(let j = 2; j >= 0; j--) {
             for(let i = 0; i < 4; i++) {
                 if(newBoard[i][j] !== 0) {
@@ -152,20 +154,22 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                            score : this.state.score + newBoard[i][k+1]
                         });
                         newBoard[i][j] = 0;
+                        hasMoved = true;
                     }
-                    else { // Just bring it to the first empty spot.
-                        if(k !== j) {
+                    else if(k !== j) {// Just bring it to the first empty spot.
                             newBoard[i][k] = newBoard[i][j];
                             newBoard[i][j] = 0;
-                        }
+                            hasMoved = true;
                     }
                 }
             }
         }
-        this.addNumber(newBoard);
+
+        if(hasMoved) this.addNumber(newBoard);
     }
 
     addNumber(newBoard: number[][]){
+        console.log(this.state.score)
         let index1,index2;
 
         //Find a random empty index
@@ -176,21 +180,34 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
 
         //Set value of empty index to 2 or 4
         if(Math.random() > .1)
-            newBoard[index1][index2] = 2;
+            newBoard[index1][index2] = this.props.baseNum;
         else
-            newBoard[index1][index2] = 4;
+            newBoard[index1][index2] = this.props.baseNum;
 
         //return newBoard to App
         this.props.onChange(newBoard);
+        if(this.loseCon(newBoard)) alert("Game Over");
+    }
+
+    loseCon(newBoard: number[][]){
+        //Check if a play can still be made
+        for(let i = 0; i < 4; i++){
+            //If there is an empty space
+            if(newBoard[i].includes(0))
+                return false;
+            //If there are two duplicates next to each other on a row
+            if(newBoard[i][1] === newBoard[i][0] || newBoard[i][1] === newBoard[i][2] || newBoard[i][2] === newBoard[i][3])
+                return false;
+            //If there are two duplicates next to each other in a column
+            if(newBoard[1][i] === newBoard[0][i] || newBoard[i][1] === newBoard[2][i] || newBoard[2][i] === newBoard[3][i])
+                return false;
+        }
+        return true;
     }
 
     render() {
         return(
-            <div>
-                <p>
-                    {this.state.score}
-                </p>
-            </div>
+            <div className="score">score: {this.state.score}</div>
         );
     }
 }

@@ -1,12 +1,11 @@
-
-
 .grid-container {
     position: absolute;
     display: grid;
     grid-template-columns: 8vw 8vw 8vw 8vw;
     grid-template-rows: 8vw 8vw 8vw 8vw;
-    background-color: #2196F3;
-    padding: 1vw;
+    padding-left: 34vw;
+    padding-right: 34vw;
+    z-index: 1;
 }
 
 .grid-item {
@@ -15,4 +14,13 @@
     padding: 2.5vw;
     font-size: 2vw;
     text-align: center;
+    z-index: 2;
 }
+
+.score {
+    text-align: center;
+    padding-left: 15vw;
+    font-size: 3vw;
+    margin: 1vw;
+}
+

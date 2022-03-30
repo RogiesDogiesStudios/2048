@@ -4,7 +4,8 @@ import Grid from './Grid';
 import KeyListener from './KeyListener';
 
 interface AppState {
-    board: number[][]
+    board: number[][],
+    baseNum: number,
 }
 
 class App extends Component<{}, AppState> {
@@ -12,18 +13,14 @@ class App extends Component<{}, AppState> {
     super(props);
     this.state = {
         board: [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]],
-    };
-    }
+        baseNum: 2,
+    };}
 
     render() {
         return (
             <div>
-                <div>
-                    <Grid board={this.state.board}/>
-                </div>
-                <div>
-                    <KeyListener onChange={(val) => this.setState({board: val})} board={this.state.board}/>
-                </div>
+                <KeyListener onChange={(val) => this.setState({board: val})} board={this.state.board} baseNum={this.state.baseNum}/>
+                <Grid board={this.state.board}/>
             </div>
         );
     }
