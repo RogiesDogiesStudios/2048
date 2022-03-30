@@ -1,0 +1,18 @@
+
+
+.grid-container {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 8vw 8vw 8vw 8vw;
+    grid-template-rows: 8vw 8vw 8vw 8vw;
+    background-color: #2196F3;
+    padding: 1vw;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: .1vw solid rgba(0, 0, 0, 0.8);
+    padding: 2.5vw;
+    font-size: 2vw;
+    text-align: center;
+}
