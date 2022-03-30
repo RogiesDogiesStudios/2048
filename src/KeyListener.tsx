@@ -7,13 +7,15 @@ interface KeyListenerProps{
 
 interface KeyListenerState{
     full: boolean
+    score: number
 }
 
 class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            full: false
+            full: false,
+            score: 0,
         };
     }
 
@@ -46,6 +48,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k+1 < 4 && k+1 !== i && newBoard[k+1][j] === newBoard[i][j]) {
                         newBoard[k+1][j] = newBoard[k+1][j]*2;
+                        this.setState({
+                            score : this.state.score + newBoard[k+1][j]
+                        });
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
@@ -76,6 +81,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k-1 > -1 && k-1 !== i && newBoard[k-1][j] === newBoard[i][j]) {
                         newBoard[k-1][j] = newBoard[k-1][j]*2;
+                        this.setState({
+                            score : this.state.score + newBoard[k-1][j]
+                        });
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
@@ -106,6 +114,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k-1 > -1 && k-1 !== j && newBoard[i][k-1] === newBoard[i][j]) {
                         newBoard[i][k-1] = newBoard[i][k-1]*2;
+                        this.setState({
+                            score : this.state.score + newBoard[i][k-1]
+                        });
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
@@ -136,6 +147,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k+1 < 4 && k+1 !== j && newBoard[i][k+1] === newBoard[i][j]) {
                         newBoard[i][k+1] = newBoard[i][k+1]*2;
+                        this.setState({
+                           score : this.state.score + newBoard[i][k+1]
+                        });
                         newBoard[i][j] = 0;
                     }
                     else { // Just bring it to the first empty spot.
@@ -170,7 +184,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     render() {
-        return("THIS IS JUST A TEST!");
+        return(
+            <div>
+                {this.state.score}
+            </div>
+        );
     }
 }
 
