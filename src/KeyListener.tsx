@@ -36,8 +36,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         const newBoard = this.state.board;
         let hasMoved = false;
         let winFlag = 1;
-         for(let i = 2; i >= 0; i--) {
-             for(let j = 0; j < 4; j++) {
+        let prev = -99;
+
+         for(let j = 0; j < 4; j++) {
+             prev = -99;
+             for(let i = 2; i >= 0; i--) {
                 if(newBoard[i][j] !== 0) {
                     // keep shifting down
                     let k = i;
@@ -48,7 +51,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     }
 
                     // Combine numbers if they're the same.
-                    if(k+1 < 4 && k+1 !== i && newBoard[k+1][j] === newBoard[i][j]) {
+                    if(k+1 < 4 && k+1 !== i && newBoard[k+1][j] === newBoard[i][j] && k+1 !== prev) {
                         newBoard[k+1][j] = newBoard[k+1][j]*2;
                         if(newBoard[k+1][j] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
@@ -56,6 +59,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
+                        prev = k+1;
                     }
                     else if(k !== i) { // Just bring it to the first empty spot.
                             newBoard[k][j] = newBoard[i][j];
@@ -72,8 +76,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         const newBoard = this.state.board;
         let hasMoved = false;
         let winFlag = 1;
-        for(let i = 1; i <= 3; i++) {
-            for(let j = 0; j < 4; j++) {
+        let prev = -99;
+
+        for(let j = 0; j < 4; j++) {
+            prev = -99;
+            for(let i = 1; i <= 3; i++) {
                 if(newBoard[i][j] !== 0) {
                     let k = i;
 
@@ -84,7 +91,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     }
 
                     // Combine numbers if they're the same.
-                    if(k-1 > -1 && k-1 !== i && newBoard[k-1][j] === newBoard[i][j]) {
+                    if(k-1 > -1 && k-1 !== i && newBoard[k-1][j] === newBoard[i][j] && k-1 !== prev) {
                         newBoard[k-1][j] = newBoard[k-1][j]*2;
                         if(newBoard[k-1][j] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
@@ -92,6 +99,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
+                        prev = k-1;
                     }
                     else if(k !== i) { // Just bring it to the first empty spot.
                             newBoard[k][j] = newBoard[i][j];
@@ -108,9 +116,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         const newBoard = this.state.board;
         let hasMoved = false;
         let winFlag = 1;
+        let prev = -99;
 
-        for(let j = 1; j <= 3; j++) {
-            for(let i = 0; i < 4; i++) {
+        for(let i = 0; i < 4; i++) {
+            prev = -99;
+            for(let j = 1; j <= 3; j++) {
                 if(newBoard[i][j] !== 0) {
                     let k = j;
 
@@ -121,7 +131,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     }
 
                     // Combine numbers if they're the same.
-                    if(k-1 > -1 && k-1 !== j && newBoard[i][k-1] === newBoard[i][j]) {
+                    if(k-1 > -1 && k-1 !== j && newBoard[i][k-1] === newBoard[i][j] && k-1 !== prev) {
                         newBoard[i][k-1] = newBoard[i][k-1]*2;
                         if(newBoard[i][k-1] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
@@ -129,6 +139,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
+                        prev = k-1;
                     }
                     else if(k !== j) { // Just bring it to the first empty spot.
                             newBoard[i][k] = newBoard[i][j];
@@ -145,8 +156,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         const newBoard = this.state.board
         let hasMoved = false;
         let winFlag = 1;
-        for(let j = 2; j >= 0; j--) {
-            for(let i = 0; i < 4; i++) {
+        let prev = -99;
+
+        for(let i = 0; i < 4; i++) {
+            prev = -99;
+            for(let j = 2; j >= 0; j--) {
                 if(newBoard[i][j] !== 0) {
                     let k = j;
 
@@ -157,7 +171,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     }
 
                     // Combine numbers if they're the same.
-                    if(k+1 < 4 && k+1 !== j && newBoard[i][k+1] === newBoard[i][j]) {
+                    if(k+1 < 4 && k+1 !== j && newBoard[i][k+1] === newBoard[i][j] && k+1 !== prev) {
                         newBoard[i][k+1] = newBoard[i][k+1]*2;
                         if(newBoard[i][k+1] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
@@ -165,6 +179,7 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
+                        prev = k+1;
                     }
                     else if(k !== j) {// Just bring it to the first empty spot.
                             newBoard[i][k] = newBoard[i][j];
