@@ -34,12 +34,6 @@ class App extends Component<{}, AppState> {
         return true;
     }
 
-    reset() {
-        this.setState({
-            board: [],
-        });
-    }
-
     newBoard(newBoard: number[][]){
         this.setState({board: newBoard});
         if(this.loseCon(newBoard))
@@ -70,7 +64,7 @@ class App extends Component<{}, AppState> {
                     board={this.state.board}
                     baseNum={this.state.baseNum}
                 />
-                <button className={'reset'} onClick={() => this.reset()}>Reset</button>
+                <button className={'reset'} onClick={() => this.setState({board: []})}>Reset</button>
             </div>
         );
     }
