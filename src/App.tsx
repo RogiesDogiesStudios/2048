@@ -14,7 +14,7 @@ class App extends Component<{}, AppState> {
     super(props);
     this.state = {
         board: [],
-        baseNum: 2, // 2.0009765625 for 2049
+        baseNum: 1, // 2.0009765625 for 2049
         score: 0,
     };}
 
@@ -37,7 +37,6 @@ class App extends Component<{}, AppState> {
     reset() {
         this.setState({
             board: [],
-            score: 0
         });
     }
 

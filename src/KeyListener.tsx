@@ -210,22 +210,22 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
             newBoard[index1][index2] = this.props.baseNum*2;
 
         //return newBoard to App
-        this.returnToApp(newBoard);
+        this.props.returnBoard(newBoard);
+        this.props.returnScore(this.state.score);
     }
 
     propRecieved(){
         if(this.props.board.length === 0){
             let newBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]];
+            this.setState({
+                board: newBoard,
+                score: 0
+            });
             this.addNumber(newBoard);
             this.addNumber(newBoard);
-            this.setState({board: newBoard});
+            this.props.returnScore(0);
         }
         return <div/>
-    }
-
-    returnToApp(newBoard: number[][]){
-        this.props.returnBoard(newBoard);
-        this.props.returnScore(this.state.score);
     }
 
     render() {
