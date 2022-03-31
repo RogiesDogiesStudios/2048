@@ -182,14 +182,14 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         if(Math.random() > .1)
             newBoard[index1][index2] = this.props.baseNum;
         else
-            newBoard[index1][index2] = this.props.baseNum;
+            newBoard[index1][index2] = this.props.baseNum*2;
 
         //return newBoard to App
         this.props.onChange(newBoard);
         if(this.loseCon(newBoard)) alert("You Lost!");
     }
 
-    loseCon(newBoard: number[][]){
+    loseCon(newBoard: number[][]) {
         //Check if a play can still be made
         for(let i = 0; i < 4; i++){
             //If there is an empty space
@@ -205,10 +205,26 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         return true;
     }
 
+    reset() {
+        const newBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]];
+
+        this.addNumber(newBoard);
+        this.addNumber(newBoard);
+
+        this.props.onChange(newBoard);
+        this.setState({
+            score: 0
+        })
+    }
+
     render() {
         return(
+            <div>
             <div className="score">score: {this.state.score}</div>
-        );
+            <div className="button"><button onClick={() => this.reset()}>New Game</button></div>
+            </div>
+
+    );
     }
 }
 
