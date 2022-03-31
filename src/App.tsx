@@ -14,7 +14,7 @@ class App extends Component<{}, AppState> {
     super(props);
     this.state = {
         board: [],
-        baseNum: 2, // 2.0009765625 for 2049
+        baseNum: 2.0009765625, // 2.0009765625 for 2049
         score: 0,
     };}
 
@@ -59,8 +59,19 @@ class App extends Component<{}, AppState> {
     render() {
         return (
             <div>
-                <KeyListener onChange={(val) => this.setState({board: val})} board={this.state.board} baseNum={this.state.baseNum}/>
-                <Grid board={this.state.board}/>
+                <div className={'title'}>{this.state.baseNum * Math.pow(2, 10)}</div>
+                <div className={'score'}>Score: {this.state.score}</div>
+                <KeyListener
+                    returnBoard={(val) => this.newBoard(val)}
+                    returnScore={(val) => this.newScore(val)}
+                    board={this.state.board}
+                    baseNum={this.state.baseNum}
+                />
+                <Grid
+                    board={this.state.board}
+                    baseNum={this.state.baseNum}
+                />
+                <button className={'reset'} onClick={() => this.reset()}>Reset</button>
             </div>
         );
     }

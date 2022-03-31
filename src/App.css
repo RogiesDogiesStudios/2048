@@ -1,11 +1,28 @@
+.title{
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    font-size: 5vw;
+    left: 31vw;
+}
+
+
+.score {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    font-size: 3vw;
+    left: 50vw;
+    top: 4vw;
+}
+
 .grid-container {
     position: absolute;
+    left: 30vw;
+    top: 8vw;
     display: grid;
     grid-template-columns: 8vw 8vw 8vw 8vw;
     grid-template-rows: 8vw 8vw 8vw 8vw;
-    padding-left: 34vw;
-    padding-right: 34vw;
-    z-index: 1;
 }
 
 .grid-item {
@@ -14,19 +31,12 @@
     padding: 2.5vw;
     font-size: 2vw;
     text-align: center;
-    z-index: 2;
 }
 
-.score {
-    text-align: center;
-    padding-left: 5vw;
-    padding-top: 5vw;
-    font-size: 3vw;
-    margin: 1vw;
-}
-
-.button {
-    text-align: center;
-    margin-bottom: 10px;
+.reset {
+    position: absolute;
+    left: 43.5vw;
+    top: 42vw;
+    padding: 1vw;
 }
 

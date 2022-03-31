@@ -5,6 +5,7 @@ const colors = ['#FFABFA', '#FFDAAB', '#D0FFAB', '#FAFFAB', '#FFABD0', '#ABFCFF'
 
 interface GridProps {
     board: number[][]
+    baseNum: number;
 }
 
 class Grid extends Component<GridProps, {}> {
