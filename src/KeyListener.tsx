@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import './App.css';
 
 interface KeyListenerProps{
-    onChange(board: number[][]): void,
+    returnBoard(board: number[][]): void,
+    returnScore(score: number): void,
     board: number[][],
     baseNum: number
 }
 
 interface KeyListenerState{
-    score: number
+    score: number,
+    board: number[][]
 }
 
 class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
@@ -16,12 +18,11 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
         super(props);
         this.state = {
             score: 0,
+            board: []
         };
     }
 
     componentDidMount() {
-        this.addNumber(this.props.board);
-        this.addNumber(this.props.board);
         // when key is pressed
         document.addEventListener('keydown', event => {
             if(event.key === "ArrowDown") this.moveDown()
@@ -32,8 +33,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveDown() {
-        const newBoard = Object.assign({}, this.props.board);
+        const newBoard = this.state.board;
         let hasMoved = false;
+        let winFlag = 1;
          for(let i = 2; i >= 0; i--) {
              for(let j = 0; j < 4; j++) {
                 if(newBoard[i][j] !== 0) {
@@ -48,8 +50,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k+1 < 4 && k+1 !== i && newBoard[k+1][j] === newBoard[i][j]) {
                         newBoard[k+1][j] = newBoard[k+1][j]*2;
+                        if(newBoard[k+1][j] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
-                            score : this.state.score + newBoard[k+1][j]
+                            score : this.state.score + newBoard[k+1][j] * winFlag
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
@@ -66,8 +69,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveUp() {
-        const newBoard = Object.assign({}, this.props.board);
+        const newBoard = this.state.board;
         let hasMoved = false;
+        let winFlag = 1;
         for(let i = 1; i <= 3; i++) {
             for(let j = 0; j < 4; j++) {
                 if(newBoard[i][j] !== 0) {
@@ -82,8 +86,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k-1 > -1 && k-1 !== i && newBoard[k-1][j] === newBoard[i][j]) {
                         newBoard[k-1][j] = newBoard[k-1][j]*2;
+                        if(newBoard[k-1][j] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
-                            score : this.state.score + newBoard[k-1][j]
+                            score : this.state.score + newBoard[k-1][j] * winFlag
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
@@ -100,8 +105,10 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveLeft() {
-        const newBoard = Object.assign({}, this.props.board);
+        const newBoard = this.state.board;
         let hasMoved = false;
+        let winFlag = 1;
+
         for(let j = 1; j <= 3; j++) {
             for(let i = 0; i < 4; i++) {
                 if(newBoard[i][j] !== 0) {
@@ -116,8 +123,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k-1 > -1 && k-1 !== j && newBoard[i][k-1] === newBoard[i][j]) {
                         newBoard[i][k-1] = newBoard[i][k-1]*2;
+                        if(newBoard[i][k-1] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
-                            score : this.state.score + newBoard[i][k-1]
+                            score : this.state.score + newBoard[i][k-1] * winFlag
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
@@ -134,8 +142,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
     }
 
     moveRight() {
-        const newBoard = Object.assign({}, this.props.board);
+        const newBoard = this.state.board
         let hasMoved = false;
+        let winFlag = 1;
         for(let j = 2; j >= 0; j--) {
             for(let i = 0; i < 4; i++) {
                 if(newBoard[i][j] !== 0) {
@@ -150,8 +159,9 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
                     // Combine numbers if they're the same.
                     if(k+1 < 4 && k+1 !== j && newBoard[i][k+1] === newBoard[i][j]) {
                         newBoard[i][k+1] = newBoard[i][k+1]*2;
+                        if(newBoard[i][k+1] === this.props.baseNum * Math.pow(2, 10)) winFlag = -1;
                         this.setState({
-                           score : this.state.score + newBoard[i][k+1]
+                           score : this.state.score + newBoard[i][k+1] * winFlag
                         });
                         newBoard[i][j] = 0;
                         hasMoved = true;
@@ -185,46 +195,26 @@ class KeyListener extends Component<KeyListenerProps, KeyListenerState> {
             newBoard[index1][index2] = this.props.baseNum*2;
 
         //return newBoard to App
-        this.props.onChange(newBoard);
-        if(this.loseCon(newBoard)) alert("You Lost!");
+        this.returnToApp(newBoard);
     }
 
-    loseCon(newBoard: number[][]) {
-        //Check if a play can still be made
-        for(let i = 0; i < 4; i++){
-            //If there is an empty space
-            if(newBoard[i].includes(0))
-                return false;
-            //If there are two duplicates next to each other on a row
-            if(newBoard[i][0] === newBoard[i][1] || newBoard[i][1] === newBoard[i][2] || newBoard[i][2] === newBoard[i][3])
-                return false;
-            //If there are two duplicates next to each other in a column
-            if(newBoard[0][i] === newBoard[1][i] || newBoard[1][i] === newBoard[2][i] || newBoard[2][i] === newBoard[3][i])
-                return false;
+    propRecieved(){
+        if(this.props.board.length === 0){
+            let newBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]];
+            this.addNumber(newBoard);
+            this.addNumber(newBoard);
+            this.setState({board: newBoard});
         }
-        return true;
+        return <div/>
     }
 
-    reset() {
-        const newBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]];
-
-        this.addNumber(newBoard);
-        this.addNumber(newBoard);
-
-        this.props.onChange(newBoard);
-        this.setState({
-            score: 0
-        })
+    returnToApp(newBoard: number[][]){
+        this.props.returnBoard(newBoard);
+        this.props.returnScore(this.state.score);
     }
 
     render() {
-        return(
-            <div>
-            <div className="score">score: {this.state.score}</div>
-            <div className="button"><button onClick={() => this.reset()}>New Game</button></div>
-            </div>
-
-    );
+        return(this.propRecieved());
     }
 }
 
